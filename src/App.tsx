@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import School from "./assets/school.png";
 import vogue from "./assets/vogue.png";
 import LeafDecor from "./assets/flower1.png";
-import SmallLeaf from "./assets/flower2.png";
 import Schedule from "./schedule";
 import CurvedLoop from "./CurvedLoop";
 import pic1 from "./assets/pic1.png";
-import pic2 from "./assets/pic2.png";
+import pic2 from "./assets/pic2.mp4";
+import soundtrack from "./assets/Abdizhappar-Alkozha-Tulekter-sagynyshy-agugai.kz_.mp3";
 
 export function ScreenHeight(percent: number) {
   return (window.innerHeight * percent) / 100;
@@ -59,6 +59,26 @@ const GeoFrame = () => (
 
 export default function App() {
   const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const audio = new Audio(soundtrack);
+    audio.loop = true;
+    audio.volume = 0.4;
+
+    const handleFirstTouch = () => {
+      audio.play().catch(() => {});
+      document.removeEventListener("touchstart", handleFirstTouch);
+      document.removeEventListener("click", handleFirstTouch);
+    };
+
+    document.addEventListener("touchstart", handleFirstTouch);
+    document.addEventListener("click", handleFirstTouch);
+
+    return () => {
+      audio.pause();
+      document.removeEventListener("touchstart", handleFirstTouch);
+      document.removeEventListener("click", handleFirstTouch);
+    };
+  }, []);
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 100);
@@ -74,7 +94,7 @@ export default function App() {
 
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
-
+  if (!isMobile) return null;
   const sectionStyle = (delay) => ({
     opacity: visible ? 1 : 0,
     transform: visible ? "translateY(0)" : "translateY(30px)",
@@ -83,7 +103,7 @@ export default function App() {
 
   return (
     <>
-      {isMobile ? (
+      {isMobile && (
         <div
           style={{
             minHeight: "100vh",
@@ -107,36 +127,14 @@ export default function App() {
             }}
           >
             <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                left: ScreenWidth(-25),
-                width: "300px",
-                transform: "rotate(170deg)",
-              }}
-            />
-            <img
               src={LeafDecor}
               alt="Leaf"
               style={{
                 position: "absolute",
-                top: ScreenHeight(10),
+                top: -ScreenHeight(5),
                 left: ScreenWidth(-15),
-                width: "200px",
-                transform: "rotate(220deg)",
-              }}
-            />
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                right: ScreenWidth(-25),
-                width: "300px",
-                transform: "scaleX(-1) rotate(170deg)",
+                width: "230px",
+                transform: "rotate(350deg)",
               }}
             />
             <img
@@ -144,10 +142,10 @@ export default function App() {
               alt="Leaf"
               style={{
                 position: "absolute",
-                top: ScreenHeight(10),
+                top: -ScreenHeight(5),
                 right: ScreenWidth(-15),
-                width: "200px",
-                transform: "scaleX(-1) rotate(220deg)",
+                width: "230px",
+                transform: "scaleX(-1) rotate(350deg)",
               }}
             />
 
@@ -227,7 +225,7 @@ export default function App() {
           </section>
           <section>
             <CurvedLoop
-              marqueeText="✦ 40 ✦ ЖЫЛДЫҚ ✦"
+              marqueeText="40 ✦ ЖЫЛДЫҚ ✦"
               speed={2}
               curveAmount={400}
               direction="right"
@@ -264,36 +262,14 @@ export default function App() {
             }}
           >
             <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                left: ScreenWidth(-25),
-                width: "300px",
-                transform: "rotate(170deg)",
-              }}
-            />
-            <img
               src={LeafDecor}
               alt="Leaf"
               style={{
                 position: "absolute",
-                top: ScreenHeight(10),
+                top: -ScreenHeight(5),
                 left: ScreenWidth(-15),
-                width: "200px",
-                transform: "rotate(220deg)",
-              }}
-            />
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                right: ScreenWidth(-25),
-                width: "300px",
-                transform: "scaleX(-1) rotate(170deg)",
+                width: "230px",
+                transform: "rotate(350deg)",
               }}
             />
             <img
@@ -301,10 +277,10 @@ export default function App() {
               alt="Leaf"
               style={{
                 position: "absolute",
-                top: ScreenHeight(10),
+                top: -ScreenHeight(5),
                 right: ScreenWidth(-15),
-                width: "200px",
-                transform: "scaleX(-1) rotate(220deg)",
+                width: "230px",
+                transform: "scaleX(-1) rotate(350deg)",
               }}
             />
 
@@ -427,12 +403,15 @@ export default function App() {
                 >
                   40 жыл
                 </strong>{" "}
-                толуына орай жайылған салтанатты ақ дастарханымыздың{" "}
+                тойлауына орай жайылған салтанатты ақ дастарханымыздың{" "}
                 <em>қадірлі қонағы болуға шақырамыз</em>
               </p>
             </div>
           </section>
-          <section>
+          <section
+            className="items-center justify-center mb-[4vh]"
+            style={{ marginBottom: ScreenHeight(5) }}
+          >
             <Schedule />
           </section>
           <section
@@ -448,36 +427,14 @@ export default function App() {
             }}
           >
             <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                left: ScreenWidth(-25),
-                width: "300px",
-                transform: "rotate(170deg)",
-              }}
-            />
-            <img
               src={LeafDecor}
               alt="Leaf"
               style={{
                 position: "absolute",
-                top: ScreenHeight(10),
+                top: -ScreenHeight(5),
                 left: ScreenWidth(-15),
-                width: "200px",
-                transform: "rotate(220deg)",
-              }}
-            />
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                right: ScreenWidth(-25),
-                width: "300px",
-                transform: "scaleX(-1) rotate(170deg)",
+                width: "230px",
+                transform: "rotate(350deg)",
               }}
             />
             <img
@@ -485,10 +442,10 @@ export default function App() {
               alt="Leaf"
               style={{
                 position: "absolute",
-                top: ScreenHeight(10),
+                top: -ScreenHeight(5),
                 right: ScreenWidth(-15),
-                width: "200px",
-                transform: "scaleX(-1) rotate(220deg)",
+                width: "230px",
+                transform: "scaleX(-1) rotate(350deg)",
               }}
             />
 
@@ -593,7 +550,7 @@ export default function App() {
               </div>
             </button>
           </section>
-          <section className="items-center justify-center">
+          <section className="items-center justify-center mb-[4vh]">
             <CurvedLoop
               marqueeText="✦ 40 ✦ ЖЫЛДЫҚ"
               speed={2}
@@ -602,556 +559,35 @@ export default function App() {
               interactive
               className="text-[#4693bd]"
             />
-            <img
-              src={pic2}
-              alt="Group Photo"
-              style={{
-                width: ScreenWidth(50),
-                objectFit: "cover",
-                rotate: "270deg",
-                padding: "4px 5px",
-                display: "block",
-                margin: "0 auto",
-              }}
-              className="rounded-xl border-2 border-[#B5D4F4]"
-            />
-          </section>
-          <style>{`
-  html, body {
-    overflow-x: hidden;
-    margin: 0;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  button { outline: none; }
-`}</style>
-        </div>
-      ) : (
-        <div
-          style={{
-            minHeight: "100vh",
-            background:
-              "linear-gradient(160deg, #E6F1FB 0%, #d9efff 40%, #dceefb 70%, #E1F5EE 100%)",
-            fontFamily: "'Georgia', 'Times New Roman', serif",
-            color: "#042C53",
-          }}
-        >
-          <section
-            id="hero"
-            style={{
-              minHeight: "100vh",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              padding: "60px 20px",
-            }}
-          >
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                left: ScreenWidth(-25),
-                width: "300px",
-                transform: "rotate(170deg)",
-              }}
-            />
-            <img
-              src={LeafDecor}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: ScreenHeight(10),
-                left: ScreenWidth(-15),
-                width: "200px",
-                transform: "rotate(220deg)",
-              }}
-            />
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                right: ScreenWidth(-25),
-                width: "300px",
-                transform: "scaleX(-1) rotate(170deg)",
-              }}
-            />
-            <img
-              src={LeafDecor}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: ScreenHeight(10),
-                right: ScreenWidth(-15),
-                width: "200px",
-                transform: "scaleX(-1) rotate(220deg)",
-              }}
-            />
-
             <div
               style={{
-                ...sectionStyle(0.2),
-                position: "relative",
-                width: "min(300px, 85vw)",
-                height: "380px",
+                width: "100%",
+                height: ScreenWidth(80),
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}
-            >
-              <GeoFrame />
-              <div
-                style={{
-                  textAlign: "center",
-                  position: "relative",
-                  zIndex: 2,
-                  padding: "40px 30px",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "clamp(72px, 18vw, 96px)",
-                    fontWeight: "700",
-                    background:
-                      "linear-gradient(135deg, #185FA5 0%, #378ADD 50%, #5DCAA5 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    lineHeight: 1,
-                    letterSpacing: "-2px",
-                    marginBottom: "4px",
-                  }}
-                >
-                  40
-                </div>
-                <div
-                  style={{
-                    fontSize: "14px",
-                    letterSpacing: "6px",
-                    color: "#185FA5",
-                    fontFamily: "'Arial', sans-serif",
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                    marginBottom: "32px",
-                  }}
-                >
-                  ЖЫЛДЫҚ
-                </div>
-                <div
-                  style={{
-                    width: "40px",
-                    height: "1px",
-                    background:
-                      "linear-gradient(90deg, transparent, #378ADD, transparent)",
-                    margin: "0 auto 20px",
-                  }}
-                />
-                <p
-                  style={{
-                    fontSize: "clamp(15px, 4vw, 18px)",
-                    color: "#0C447C",
-                    lineHeight: 1.6,
-                    fontStyle: "italic",
-                    margin: 0,
-                  }}
-                >
-                  Құрметті ұстаздар,
-                  <br />
-                  сыныптастар!
-                </p>
-              </div>
-            </div>
-          </section>
-          <section>
-            <CurvedLoop
-              marqueeText="✦ 40 ✦ ЖЫЛДЫҚ ✦"
-              speed={2}
-              curveAmount={400}
-              direction="right"
-              interactive
-              className="text-[#4693bd]"
-            />
-            <img
-              src={pic1}
-              alt="Group Photo"
-              style={{
-                width: ScreenWidth(20),
-                objectFit: "cover",
-                rotate: "270deg",
-                border: "1.5px solid #B5D4F4",
-                padding: "4px",
-              }}
-              className="justify-self-center items-center mx-auto rounded-xl border-2 border-[#B5D4F4]"
-            />
-          </section>
-          <section
-            id="invite"
-            style={{
-              minHeight: "100vh",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              padding: "80px 24px",
-              marginTop: ScreenHeight(10),
-            }}
-          >
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                left: ScreenWidth(-25),
-                width: "300px",
-                transform: "rotate(170deg)",
-              }}
-            />
-            <img
-              src={LeafDecor}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: ScreenHeight(10),
-                left: ScreenWidth(-15),
-                width: "200px",
-                transform: "rotate(220deg)",
-              }}
-            />
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                right: ScreenWidth(-25),
-                width: "300px",
-                transform: "scaleX(-1) rotate(170deg)",
-              }}
-            />
-            <img
-              src={LeafDecor}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: ScreenHeight(10),
-                right: ScreenWidth(-15),
-                width: "200px",
-                transform: "scaleX(-1) rotate(220deg)",
-              }}
-            />
-
-            <div
-              className="rounded-xl"
-              style={{
-                ...sectionStyle(0.1),
-                width: "min(340px, 90vw)",
-                marginBottom: "40px",
                 overflow: "hidden",
-                border: "1.5px solid #B5D4F4",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
-                padding: "10px",
+                background: "transparent",
               }}
             >
-              <img
-                src={School}
-                className="rounded-xl"
-                alt="School"
+              <video
+                autoPlay
+                loop
+                muted
+                src={pic2}
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  width: ScreenHeight(50),
+                  marginTop: ScreenHeight(5),
+                  maxWidth: "90vw",
                   objectFit: "cover",
+                  rotate: "0deg",
+                  padding: "4px 5px",
+                  display: "block",
+                  margin: "0 auto",
                 }}
+                className="rounded-xl border-2 border-[#B5D4F4]"
               />
             </div>
-
-            <div
-              style={{
-                ...sectionStyle(0.3),
-                width: "min(380px, 92vw)",
-                background: "rgba(255,255,255,0.25)",
-                backdropFilter: "blur(10px)",
-                borderRadius: "20px",
-                border: "1px solid rgba(181,212,244,0.6)",
-                padding: "40px 32px",
-                textAlign: "center",
-                position: "relative",
-              }}
-            >
-              {[
-                {
-                  top: "12px",
-                  left: "12px",
-                  borderTop: "2px solid #378ADD",
-                  borderLeft: "2px solid #378ADD",
-                },
-                {
-                  top: "12px",
-                  right: "12px",
-                  borderTop: "2px solid #378ADD",
-                  borderRight: "2px solid #378ADD",
-                },
-                {
-                  bottom: "12px",
-                  left: "12px",
-                  borderBottom: "2px solid #378ADD",
-                  borderLeft: "2px solid #378ADD",
-                },
-                {
-                  bottom: "12px",
-                  right: "12px",
-                  borderBottom: "2px solid #378ADD",
-                  borderRight: "2px solid #378ADD",
-                },
-              ].map((s, i) => (
-                <div
-                  key={i}
-                  style={{
-                    position: "absolute",
-                    width: "16px",
-                    height: "16px",
-                    ...s,
-                  }}
-                />
-              ))}
-
-              <div
-                style={{
-                  fontSize: "11px",
-                  letterSpacing: "4px",
-                  color: "#378ADD",
-                  fontFamily: "sans-serif",
-                  fontWeight: "600",
-                  textTransform: "uppercase",
-                  marginBottom: "20px",
-                }}
-              >
-                — ШАҚЫРУ —
-              </div>
-
-              <p
-                style={{
-                  fontSize: "clamp(14px, 3.5vw, 16px)",
-                  lineHeight: 1.9,
-                  color: "#0C447C",
-                  margin: 0,
-                }}
-              >
-                Сіздерді{" "}
-                <strong style={{ color: "#042C53" }}>
-                  Нұрмақов атындағы ММИ-ның
-                </strong>{" "}
-                <strong style={{ color: "#042C53" }}>
-                  1986 жылғы түлектерінің
-                </strong>{" "}
-                мектеп бітіргеніне{" "}
-                <strong
-                  style={{
-                    fontSize: "20px",
-                    background: "linear-gradient(135deg, #185FA5, #5DCAA5)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  40 жыл
-                </strong>{" "}
-                толуына орай жайылған салтанатты ақ дастарханымыздың{" "}
-                <em>қадірлі қонағы болуға шақырамыз</em>
-              </p>
-            </div>
-          </section>
-          <section>
-            <Schedule />
-          </section>
-          <section
-            id="venue"
-            style={{
-              minHeight: "100vh",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              padding: "80px 24px",
-            }}
-          >
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                left: ScreenWidth(-25),
-                width: "300px",
-                transform: "rotate(170deg)",
-              }}
-            />
-            <img
-              src={LeafDecor}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: ScreenHeight(10),
-                left: ScreenWidth(-15),
-                width: "200px",
-                transform: "rotate(220deg)",
-              }}
-            />
-            <img
-              src={SmallLeaf}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: -ScreenHeight(10),
-                right: ScreenWidth(-25),
-                width: "300px",
-                transform: "scaleX(-1) rotate(170deg)",
-              }}
-            />
-            <img
-              src={LeafDecor}
-              alt="Leaf"
-              style={{
-                position: "absolute",
-                top: ScreenHeight(10),
-                right: ScreenWidth(-15),
-                width: "200px",
-                transform: "scaleX(-1) rotate(220deg)",
-              }}
-            />
-
-            <button
-              onClick={() =>
-                window.open(
-                  "https://2gis.kz/karaganda/firm/70000001020299483",
-                  "_blank",
-                )
-              }
-              style={{ all: "unset", cursor: "pointer" }}
-            >
-              <div
-                className="rounded-xl"
-                style={{
-                  ...sectionStyle(0.1),
-                  width: "min(340px, 90vw)",
-                  marginBottom: "40px",
-                  overflow: "hidden",
-                  border: "1.5px solid #B5D4F4",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  padding: "10px",
-                  background: "rgba(255,255,255,0.5)",
-                }}
-              >
-                <img
-                  src={vogue}
-                  className="rounded-xl"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-                <button
-                  style={{ all: "unset", cursor: "pointer" }}
-                  onClick={() =>
-                    window.open(
-                      "https://2gis.kz/karaganda/firm/70000001020299483?m=73.155401%2C49.779425%2F16",
-                      "_blank",
-                    )
-                  }
-                >
-                  <div
-                    style={{
-                      ...sectionStyle(0.35),
-                      width: "min(360px, 90vw)",
-                      backdropFilter: "blur(12px)",
-                      padding: "10px",
-                      textAlign: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontStyle: "italic",
-                        background:
-                          "linear-gradient(135deg, #185FA5 0%, #378ADD 60%, #5DCAA5 100%)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                        letterSpacing: "1px",
-                      }}
-                    >
-                      "Vogue" Мейрамханасы
-                    </div>
-                    <div className="flex justify-center items-center mx-auto text-center px-4">
-                      Степной-1 шағынауданы, ст2/2
-                    </div>
-                    <div
-                      style={{
-                        background: "#9ac4db",
-                        borderRadius: 8,
-                        padding: "5px 5px",
-                        display: "flex",
-                        width: ScreenWidth(8),
-                        margin: "auto",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: 2,
-                        flexShrink: 0,
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: 14,
-                          fontFamily: "'Jost',sans-serif",
-                          color: "#fff",
-                          fontWeight: 700,
-                          letterSpacing: "0.05em",
-                        }}
-                      >
-                        2GIS ↗
-                      </span>
-                    </div>
-                  </div>
-                </button>
-              </div>
-            </button>
-          </section>
-          <section className="items-center justify-center">
-            <CurvedLoop
-              marqueeText="✦ 40 ✦ ЖЫЛДЫҚ"
-              speed={2}
-              curveAmount={400}
-              direction="right"
-              interactive
-              className="text-[#4693bd]"
-            />
-            <img
-              src={pic2}
-              alt="Group Photo"
-              style={{
-                width: ScreenWidth(20),
-                objectFit: "cover",
-                rotate: "270deg",
-                padding: "4px 5px",
-              }}
-              className="justify-self-center items-center rounded-xl border-2 border-[#B5D4F4]"
-            />
           </section>
           <style>{`
   html, body {
