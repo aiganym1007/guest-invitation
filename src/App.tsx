@@ -244,8 +244,10 @@ export default function App() {
                 border: "1.5px solid #B5D4F4",
                 marginBottom: ScreenHeight(15),
                 padding: "4px",
+                display: "block",
+                margin: "0 auto",
               }}
-              className="justify-self-center items-center mx-auto rounded-xl border-2 border-[#B5D4F4]"
+              className="rounded-xl border-2 border-[#B5D4F4]"
             />
           </section>
           <section
@@ -608,8 +610,10 @@ export default function App() {
                 objectFit: "cover",
                 rotate: "270deg",
                 padding: "4px 5px",
+                display: "block",
+                margin: "0 auto",
               }}
-              className="justify-self-center items-center rounded-xl border-2 border-[#B5D4F4]"
+              className="rounded-xl border-2 border-[#B5D4F4]"
             />
           </section>
           <style>{`
