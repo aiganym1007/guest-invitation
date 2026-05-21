@@ -60,23 +60,40 @@ const GeoFrame = () => (
 export default function App() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const audio = new Audio(soundtrack);
-    audio.loop = true;
-    audio.volume = 0.4;
+    let audio: HTMLAudioElement | null = null;
 
-    const handleFirstTouch = () => {
+    const handleFirstInteraction = () => {
+      if (audio) return; // уже запустили
+
+      // Создаём и запускаем ВНУТРИ обработчика — это ключевое для Android
+      audio = new Audio(soundtrack);
+      audio.loop = true;
+      audio.volume = 0.4;
+
+      // Нужен для разблокировки AudioContext на Android
+      type AudioContextConstructor = typeof window.AudioContext;
+      const AudioContext: AudioContextConstructor | undefined =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext?: AudioContextConstructor }).webkitAudioContext;
+      if (AudioContext) {
+        const ctx = new AudioContext();
+        ctx.resume();
+      }
+
       audio.play().catch(() => {});
-      document.removeEventListener("touchstart", handleFirstTouch);
-      document.removeEventListener("click", handleFirstTouch);
+
+      document.removeEventListener("touchend", handleFirstInteraction);
+      document.removeEventListener("click", handleFirstInteraction);
     };
 
-    document.addEventListener("touchstart", handleFirstTouch);
-    document.addEventListener("click", handleFirstTouch);
+    // touchend надёжнее touchstart на Android
+    document.addEventListener("touchend", handleFirstInteraction);
+    document.addEventListener("click", handleFirstInteraction);
 
     return () => {
-      audio.pause();
-      document.removeEventListener("touchstart", handleFirstTouch);
-      document.removeEventListener("click", handleFirstTouch);
+      audio?.pause();
+      document.removeEventListener("touchend", handleFirstInteraction);
+      document.removeEventListener("click", handleFirstInteraction);
     };
   }, []);
 
@@ -95,7 +112,7 @@ export default function App() {
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
   if (!isMobile) return null;
-  const sectionStyle = (delay) => ({
+  const sectionStyle = (delay: number) => ({
     opacity: visible ? 1 : 0,
     transform: visible ? "translateY(0)" : "translateY(30px)",
     transition: `opacity 0.9s ease ${delay}s, transform 0.9s ease ${delay}s`,
